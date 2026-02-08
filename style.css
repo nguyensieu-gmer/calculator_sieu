@@ -161,6 +161,34 @@ img {
 .caculator .operatorBtn{
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+    width: 400px;
+    height: 400px;
+    margin: auto;
+}
+
+.caculator .operatorBtn .adjust{
+    display: flex;
+    gap: 10px;
+}
+
+.caculator .operatorBtn .adjust #clear,
+.caculator .operatorBtn .adjust #delete{
+    flex-grow: 1;
+    border-radius: 10px;
+    height: 50px;
+}
+
+.caculator .operatorBtn .row{
+    display: flex;
+    gap: 20px;
+}
+
+.caculator .operatorBtn .row .btn{
+    flex-grow: 1;
+    height: 50px;
+    border-radius: 10px;
 }
 
 /* footer */
