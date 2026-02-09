@@ -81,7 +81,7 @@ btn.addEventListener("click", e => {
         
         input.textContent += e.target.textContent;
 
-        if (checkOperate(input.textContent) === -1){
+        if ((checkOperate(input.textContent) === -1) || (e.target.id === "dot" && dotstatus)){
             output.textContent = "invalid Syntax";
             validOperator = false;
         }
@@ -102,7 +102,10 @@ clear.addEventListener("click", () => {
 });
 
 deleteBtn.addEventListener("click", e => {
-    input.textContent = input.textContent.slice(0, -1);
+    if (input.textContent.at(-1) === ' '){
+        input.textContent = input.textContent.slice(0, -3);
+    } else 
+        input.textContent = input.textContent.slice(0, -1);
 });
 
 function operator(string){
@@ -123,6 +126,8 @@ function operator(string){
     else if (ope === "/"){
         res = divide(term1, term2);
     }
+
+    if (Number.isNaN(res)) return "invalid Syntax";
     return isNumberString(res) ? Math.round(res * 100000) / 100000 : res;
 }
 
