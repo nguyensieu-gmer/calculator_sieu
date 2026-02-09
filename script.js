@@ -12,11 +12,11 @@ let validOperator = true;
 let term1Check = false;
 let term2Check = false;
 let opeCheck = false;
-let result;
+let result = 0;
 
 // craft
 input.textContent = "";
-output.textContent = "";
+output.textContent = "0";
 
 function isNumberString(str){
     return Number.isFinite(Number(str));
@@ -48,7 +48,7 @@ function divide(a, b){ // divide by 0
 
 function checkOperate(string){
     let arr = string.split(" ");
-    if (arr.length === 1 && isNumberString(arr[0])){
+    if (arr.length === 1 && (isNumberString(arr[0]) || arr[0] === '.')){
         return 1;
     }
     else if (arr.length === 3){
@@ -66,9 +66,6 @@ btn.addEventListener("click", e => {
     && e.target.id !== "clear"
     && e.target.id !== "delete"
     && e.target.id !== "equal"){
-        if (e.target.classList.contains("operate")){
-            dotstatus = false;
-        }
         if (checkOperate(input.textContent) === 3) {
             if (e.target.classList.contains("operate")){
                 result = operator(input.textContent);
@@ -86,19 +83,15 @@ btn.addEventListener("click", e => {
             validOperator = false;
         }
         else{
+            output.textContent = result;
             validOperator = true;
         }
     }
 });
 
 clear.addEventListener("click", () => {
-    if (input.textContent === "" && output.textContent === ""){
-        return;
-    }
-    else{
-        input.textContent = "";
-        output.textContent = "";
-    }
+    input.textContent = "";
+    output.textContent = " 0";
 });
 
 deleteBtn.addEventListener("click", e => {
