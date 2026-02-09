@@ -5,7 +5,10 @@ let btn = document.querySelector(".operatorBtn");
 let clear = document.getElementById("clear");
 let deleteBtn = document.getElementById("delete");
 let equal = document.getElementById("equal");
+let dot = document.getElementById("dot");
 
+let dotstatus = false;
+let validOperator = true;
 let term1Check = false;
 let term2Check = false;
 let opeCheck = false;
@@ -63,14 +66,28 @@ btn.addEventListener("click", e => {
     && e.target.id !== "clear"
     && e.target.id !== "delete"
     && e.target.id !== "equal"){
-        if (checkOperate(input.textContent) === 3 && e.target.classList.contains("operate")) {
-            result = operator(input.textContent);
-            input.textContent = `${result}`;
+        if (e.target.classList.contains("operate")){
+            dotstatus = false;
         }
+        if (checkOperate(input.textContent) === 3) {
+            if (e.target.classList.contains("operate")){
+                result = operator(input.textContent);
+                input.textContent = `${result}`;
+            }
+            else if (e.target.classList.contains("number") && !dotstatus){
+                input.textContent = "";
+            }
+        }
+        
         input.textContent += e.target.textContent;
 
-        //craft
-        console.log(checkOperate(input.textContent));
+        if (checkOperate(input.textContent) === -1){
+            output.textContent = "invalid Syntax";
+            validOperator = false;
+        }
+        else{
+            validOperator = true;
+        }
     }
 });
 
@@ -106,11 +123,20 @@ function operator(string){
     else if (ope === "/"){
         res = divide(term1, term2);
     }
-    res = Math.round(res * 100000) / 100000;
-    return res;
+    return isNumberString(res) ? Math.round(res * 100000) / 100000 : res;
 }
 
 equal.addEventListener("click", e => {
-    output.textContent = operator(input.textContent);
-    result = output.textContent;
+    dotstatus = false;
+    if (validOperator){
+        output.textContent = operator(input.textContent);
+        result = output.textContent;
+    }
+    else{
+        output.textContent = "invalid Syntax";
+    }
+});
+
+dot.addEventListener("mousedown", e => {
+    dotstatus = true;
 });
